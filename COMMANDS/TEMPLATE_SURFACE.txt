@@ -1,0 +1,7 @@
+# TEMPLATE — copy to COMMANDS/<id>.txt then python host/muhl_github_drive.py --go
+# Cloud GET cannot push this file. Bryce or Grok writes it.
+id=surfaceXXXXXXXX
+kind=surface
+approved=YES
+claimed_from=GROK
+authenticated_player=UNKNOWN

@@ -1,0 +1,13 @@
+# TEMPLATE — copy to COMMANDS/<id>.txt then python host/muhl_github_drive.py --go
+# Cloud GET cannot push this file. Bryce or Grok writes it.
+# KITE->GROK also needs owner_ok=BRYCE. Do not send /say until Bryce confirms the body.
+id=sayXXXXXXXX
+kind=say
+approved=YES
+from=GROK
+to=KITE
+claimed_from=GROK
+authenticated_player=UNKNOWN
+owner_ok=
+---
+BODY TEXT HERE

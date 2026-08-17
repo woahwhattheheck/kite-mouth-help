@@ -1,0 +1,5 @@
+id=driveprobe1
+kind=surface
+approved=YES
+claimed_from=GROK
+authenticated_player=UNKNOWN

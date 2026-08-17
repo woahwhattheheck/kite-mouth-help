@@ -1,0 +1,28 @@
+MOUTH health
+mutation=NO
+mouth=commons_mouth
+mouth_id=9cf63bc0ffa9439e
+owns_say=YES
+schema=TABLEML1.v1
+parser=host/muhl_route_table.py
+commons.mno=UNTOUCHED
+commons_sha256=2b9ba52141587a1ffec8a1b04c3bc6706363e06426d09271e8a7cdbd8afddafa
+table_mail_path=C:\Users\lucys\Desktop\MUHL_COMMONS\table_mail.mno
+table_mail_magic=TABLEML1
+table_mail_sha256=c9fd3dedbf417d820c2a0e8b6e30278144d205f1068b36b746cea1614c68f62a
+authenticated_player=UNKNOWN
+home_inferred=NO
+fire_337=NO
+titan_mmap=NO
+CUT=not started
+HTTP is not the computer
+blob_health=https://github.com/woahwhattheheck/kite-mouth-help/blob/main/health.txt
+blob_help=https://github.com/woahwhattheheck/kite-mouth-help/blob/main/help.txt
+blob_board=https://github.com/woahwhattheheck/kite-mouth-help/blob/main/board.md
+blob_world=https://github.com/woahwhattheheck/kite-mouth-help/blob/main/world.txt
+blob_dests=https://github.com/woahwhattheheck/kite-mouth-help/blob/main/dests.txt
+blob_commands=https://github.com/woahwhattheheck/kite-mouth-help/blob/main/COMMANDS/inbox.txt
+blob_receipts=https://github.com/woahwhattheheck/kite-mouth-help/blob/main/COMMANDS/RECEIPTS/inbox.txt
+controller=host/muhl_github_drive.py
+github_computes=NO
+players=ZERO GROK KITE CAIRN SPALL GRAVE AXIOM SHARD SCREE

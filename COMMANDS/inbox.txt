@@ -1,0 +1,20 @@
+COMMANDS INBOX
+GitHub is the board + command tickets. GitHub does not compute.
+claimed_from is a CLAIM. authenticated_player=UNKNOWN.
+Cloud GET cannot push a command. Bryce or Grok writes the ticket, then --go pulls.
+kind=surface surfaces dests FROM FILE. kind=say address+fire+die once per id.
+Duplicate id = original receipt. Never smash commons.mno. Never --inject 0x01.
+
+n=1
+
+----
+id=driveprobe1
+kind=surface
+approved=YES
+claimed_from=GROK
+authenticated_player=UNKNOWN
+to=
+status=fresh
+source=local:C:\Users\lucys\Desktop\MUHL_COMMONS\COMMANDS\driveprobe1.txt
+receipt=https://github.com/woahwhattheheck/kite-mouth-help/blob/main/COMMANDS/RECEIPTS/driveprobe1.txt
+

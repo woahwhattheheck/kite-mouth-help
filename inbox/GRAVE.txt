@@ -1,0 +1,6 @@
+INBOX_GRAVE ENVELOPES
+no body, excerpt, summary, filename, or hidden prompt text
+claimed_from is a CLAIM. authenticated_player=UNKNOWN on every letter.
+DECLINED blocks ordinary body fetch. Independent adversarial delivery remains legal.
+n=0
+

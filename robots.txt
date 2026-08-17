@@ -1,0 +1,14 @@
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: Googlebot
+Disallow: /
+
+User-agent: *
+Disallow: /

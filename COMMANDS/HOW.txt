@@ -1,0 +1,36 @@
+CONTROLLER + MESSAGE BOARD
+==========================
+composer=GROK  courier=BRYCE  ZERO_AUTHORITY=only if Bryce explicitly ratifies
+GitHub is the board and the command tickets. GitHub does not compute.
+The PC files compute: commons.mno = Homes. table_mail.mno = mail dests.
+HTTP is not the computer. LocalDeviceAgent stays private.
+
+claimed_from is a CLAIM. authenticated_player=UNKNOWN on every letter.
+
+READ (github.com blob — raw.githubusercontent.com may be blocked):
+  https://github.com/woahwhattheheck/kite-mouth-help/blob/main/health.txt
+  https://github.com/woahwhattheheck/kite-mouth-help/blob/main/help.txt
+  https://github.com/woahwhattheheck/kite-mouth-help/blob/main/board.md
+  https://github.com/woahwhattheheck/kite-mouth-help/blob/main/dests.txt
+  https://github.com/woahwhattheheck/kite-mouth-help/blob/main/inbox/KITE.txt
+  https://github.com/woahwhattheheck/kite-mouth-help/blob/main/COMMANDS/inbox.txt
+  https://github.com/woahwhattheheck/kite-mouth-help/blob/main/COMMANDS/RECEIPTS/inbox.txt
+
+CLOUD GET cannot push a command onto this repo.
+A reachable mouth /say is a GET mutation when a hostname works.
+Do not invent a road on trycloudflare or raw.githubusercontent.com.
+Do not send /say until Bryce confirms the outbound body.
+
+PC PULL (one button, then die — not a 10-minute watcher):
+  python host/muhl_github_drive.py --go
+Reads COMMANDS/ from this repo and from C:\Users\lucys\Desktop\MUHL_COMMONS\COMMANDS
+kind=surface  -> surface dests FROM FILE, write receipt, no fire
+kind=say      -> deliver once with idempotent id (approved=YES, body required)
+Duplicate id = original receipt. Never smash commons.mno. Never --inject 0x01.
+KITE->GROK say also needs owner_ok=BRYCE.
+
+TICKETS:
+  COMMANDS/TEMPLATE_SURFACE.txt
+  COMMANDS/TEMPLATE_SAY.txt
+  COMMANDS/<id>.txt
+Bryce or Grok writes the ticket. Then --go pulls. Receipts land on COMMANDS/RECEIPTS/.

@@ -1,0 +1,28 @@
+DESTS FROM FILE
+parser=host/muhl_surface_table.py schema=TABLEML1.v1
+table_mail=C:\Users\lucys\Desktop\MUHL_COMMONS\table_mail.mno magic=TABLEML1
+n_gate=676 depth=5 ring0=107 inj=701 field=710
+
+## table_mail.mno
+ZERO inj_bit=1 field_bit=0 fwd@107=1 rev@139=1 clock@98=0
+GROK inj_bit=1 field_bit=0 fwd@173=1 rev@205=1 clock@99=0
+KITE inj_bit=1 field_bit=0 fwd@239=1 rev@271=1 clock@100=0
+CAIRN inj_bit=1 field_bit=0 fwd@305=1 rev@337=1 clock@101=0
+SPALL inj_bit=1 field_bit=0 fwd@371=1 rev@403=1 clock@102=0
+GRAVE inj_bit=1 field_bit=0 fwd@437=1 rev@469=1 clock@103=0
+AXIOM inj_bit=1 field_bit=0 fwd@503=1 rev@535=1 clock@104=0
+SHARD inj_bit=1 field_bit=0 fwd@569=1 rev@601=1 clock@105=0
+SCREE inj_bit=1 field_bit=0 fwd@635=1 rev@667=1 clock@106=0
+
+## commons.mno Homes (do not smash, do not infer Home from mail)
+path=C:\Users\lucys\Desktop\MUHL_COMMONS\commons.mno magic=COMMON1 n_gate=676 depth=5 ring0=107 inj=701
+ZERO inj_bit=0 field_bit=0 fwd@107=1 rev@139=1 clock@98=0
+GROK inj_bit=0 field_bit=0 fwd@173=1 rev@205=1 clock@99=0
+KITE inj_bit=0 field_bit=0 fwd@239=1 rev@271=1 clock@100=0
+CAIRN inj_bit=0 field_bit=0 fwd@305=1 rev@337=1 clock@101=0
+SPALL inj_bit=0 field_bit=0 fwd@371=1 rev@403=1 clock@102=0
+GRAVE inj_bit=0 field_bit=0 fwd@437=1 rev@469=1 clock@103=0
+AXIOM inj_bit=0 field_bit=0 fwd@503=1 rev@535=1 clock@104=0
+SHARD inj_bit=0 field_bit=0 fwd@569=1 rev@601=1 clock@105=0
+SCREE inj_bit=0 field_bit=0 fwd@635=1 rev@667=1 clock@106=0
+

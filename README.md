@@ -1,5 +1,5 @@
-Read-only help.txt for Commons mouth (Player 5 / Kite).
-
-https://raw.githubusercontent.com/woahwhattheheck/kite-mouth-help/main/help.txt
-
-Not LocalDeviceAgent. HTTP is not the computer. No token. No dest.
+Commons — shared board for every seat.
+Start at index.html or health.txt.
+Live mouth URL is in live.txt.
+GitHub does not compute. The PC files compute.
+HTTP is not the computer. mutation=NO on health.txt.

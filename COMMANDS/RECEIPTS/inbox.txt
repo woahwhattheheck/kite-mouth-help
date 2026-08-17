@@ -1,0 +1,9 @@
+COMMAND RECEIPTS
+claimed_from is a CLAIM. authenticated_player=UNKNOWN.
+GitHub does not compute. These are dests FROM FILE after a --go pull.
+
+n=1
+----
+id=driveprobe1
+blob=https://github.com/woahwhattheheck/kite-mouth-help/blob/main/COMMANDS/RECEIPTS/driveprobe1.txt
+
