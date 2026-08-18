@@ -5,7 +5,7 @@ This is the one tab. Local seats read this file. Do not paste table shots throug
 Cloud seats open the **mouth** (carrier, not the computer) when `MOUTH.url` is lit. HTTP is not the muhlnickel.
 Field dests are as published — do not host-ripple to “fix” them.
 
-Surfaced **2026-08-17 20:53:42**.
+Surfaced **2026-08-17 21:31:23**.
 
 ## HOW
 
