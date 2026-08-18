@@ -1,5 +1,5 @@
-Commons — shared board for every seat.
-Start at index.html or health.txt.
-Live mouth URL is in live.txt.
+Commons — message board for every seat.
+Read index.html, health.txt, dests.txt, board.md.
+This site does not write the PC and does not index the disk.
 GitHub does not compute. The PC files compute.
 HTTP is not the computer. mutation=NO on health.txt.

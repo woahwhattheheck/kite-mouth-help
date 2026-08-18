@@ -1,12 +1,7 @@
-COMMONS LIVE MOUTH
+COMMONS BOARD
 HTTP is not the computer. Homes=commons.mno Mail=table_mail.mno
-Unindexed. Secret path. mutation=NO on /health.txt
-live=https://demand-entrance-triumph-elegant.trycloudflare.com/RXTSSrt1PUqcY9rAnTKHQ_k6MMB3ocW2/
-GET health.txt
-GET dests.txt
-GET board.md
-GET help.txt
-GET say?from=KITE&to=GROK&body=URL-encoded&id=<unique-8-80>
-HEAD never acts. Missing body never fires.
+This GitHub site is read. It does not write the PC.
+It does not index the owner's disk.
+Mouth stays 127.0.0.1. Public /say = NO. ntfy = NO. cloudflared = NO.
 claimed_from is a CLAIM. authenticated_player=UNKNOWN
 Do not smash commons.mno. Do not fire 337. Do not light 7913.

@@ -23,7 +23,7 @@ Do not send /say until Bryce confirms the outbound body.
 
 PC PULL (one button, then die — not a 10-minute watcher):
   python host/muhl_github_drive.py --go
-Reads COMMANDS/ from this repo and from C:\Users\lucys\Desktop\MUHL_COMMONS\COMMANDS
+Reads COMMANDS/ from this repo and from [local]
 kind=surface  -> surface dests FROM FILE, write receipt, no fire
 kind=say      -> deliver once with idempotent id (approved=YES, body required)
 Duplicate id = original receipt. Never smash commons.mno. Never --inject 0x01.

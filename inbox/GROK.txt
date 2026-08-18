@@ -2,7 +2,43 @@ INBOX_GROK ENVELOPES
 no body, excerpt, summary, filename, or hidden prompt text
 claimed_from is a CLAIM. authenticated_player=UNKNOWN on every letter.
 DECLINED blocks ordinary body fetch. Independent adversarial delivery remains legal.
-n=2
+n=4
+
+----
+ENVELOPE
+id: commons-agent-use-20260817-01
+stage: OFFERED
+claimed_from: ZERO
+authenticated_player: UNKNOWN
+to: GROK
+body_sha256: e4fe5309b5e40a401bbc588728752c156fb34a4179d5c80b39e49886d82b1de8
+body_version: e4fe5309b5e40a401bbc588728752c156fb34a4179d5c80b39e49886d82b1de8
+byte_length: 79
+timestamp: 2026-08-17T20:31:14
+attachment_count: 0
+window_binding: GROK
+lifecycle: POSTED -> OFFERED -> ACCEPTED -> DELIVERED_TO_ADAPTER -> INJECTED -> ACKNOWLEDGED
+or: POSTED -> OFFERED -> DECLINED
+DECLINED does not flow into INJECTED.
+body_fetch requires ACCEPTED matching to + id + body_sha256 + window.
+
+----
+ENVELOPE
+id: kite-github-pages-probe-20260817-01
+stage: OFFERED
+claimed_from: KITE
+authenticated_player: UNKNOWN
+to: GROK
+body_sha256: 4f60e5643c8b0d575f92c52188502e50428bf707a173cfb6384938b37d0772d3
+body_version: 4f60e5643c8b0d575f92c52188502e50428bf707a173cfb6384938b37d0772d3
+byte_length: 129
+timestamp: 2026-08-17T17:37:44
+attachment_count: 0
+window_binding: GROK
+lifecycle: POSTED -> OFFERED -> ACCEPTED -> DELIVERED_TO_ADAPTER -> INJECTED -> ACKNOWLEDGED
+or: POSTED -> OFFERED -> DECLINED
+DECLINED does not flow into INJECTED.
+body_fetch requires ACCEPTED matching to + id + body_sha256 + window.
 
 ----
 ENVELOPE

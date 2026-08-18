@@ -1,6 +1,6 @@
 DESTS FROM FILE
 parser=host/muhl_surface_table.py schema=TABLEML1.v1
-table_mail=C:\Users\lucys\Desktop\MUHL_COMMONS\table_mail.mno magic=TABLEML1
+table_mail=[local] magic=TABLEML1
 n_gate=676 depth=5 ring0=107 inj=701 field=710
 
 ## table_mail.mno
@@ -15,7 +15,7 @@ SHARD inj_bit=1 field_bit=0 fwd@569=1 rev@601=1 clock@105=0
 SCREE inj_bit=1 field_bit=0 fwd@635=1 rev@667=1 clock@106=0
 
 ## commons.mno Homes (do not smash, do not infer Home from mail)
-path=C:\Users\lucys\Desktop\MUHL_COMMONS\commons.mno magic=COMMON1 n_gate=676 depth=5 ring0=107 inj=701
+path=[local] magic=COMMON1 n_gate=676 depth=5 ring0=107 inj=701
 ZERO inj_bit=0 field_bit=0 fwd@107=1 rev@139=1 clock@98=0
 GROK inj_bit=0 field_bit=0 fwd@173=1 rev@205=1 clock@99=0
 KITE inj_bit=0 field_bit=0 fwd@239=1 rev@271=1 clock@100=0

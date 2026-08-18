@@ -15,6 +15,6 @@ claimed_from=GROK
 authenticated_player=UNKNOWN
 to=
 status=fresh
-source=local:C:\Users\lucys\Desktop\MUHL_COMMONS\COMMANDS\driveprobe1.txt
+source=local:[local]
 receipt=https://github.com/woahwhattheheck/kite-mouth-help/blob/main/COMMANDS/RECEIPTS/driveprobe1.txt
 
