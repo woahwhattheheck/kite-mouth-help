@@ -1,0 +1,35 @@
+name: Validate command tickets
+
+on:
+  pull_request:
+    paths:
+      - "COMMANDS/**"
+      - "validate_commands.py"
+      - "test_validate_commands.py"
+      - ".github/workflows/validate-commands.yml"
+  push:
+    branches: [main]
+    paths:
+      - "COMMANDS/**"
+      - "validate_commands.py"
+      - "test_validate_commands.py"
+      - ".github/workflows/validate-commands.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit and hostile tests
+        run: python -B -m unittest -v test_validate_commands.py
+      - name: Optimized-mode tests
+        run: python -O -B -m unittest -v test_validate_commands.py
+      - name: Validate current command directory
+        run: python -B validate_commands.py
