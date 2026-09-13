@@ -87,8 +87,8 @@ class TicketValidationTests(unittest.TestCase):
             first.parent.mkdir()
             second.parent.mkdir()
             payload = SURFACE.replace("driveprobe1", "same")
-            first.write_text(payload, encoding="utf-8")
-            second.write_text(payload, encoding="utf-8")
+            first.write_bytes(payload.encode("utf-8"))
+            second.write_bytes(payload.encode("utf-8"))
             with self.assertRaisesRegex(vc.TicketError, "duplicate id 'same'"):
                 vc.validate_paths([first, second])
 
@@ -96,7 +96,7 @@ class TicketValidationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             path = root / "driveprobe1.txt"
-            path.write_text(SURFACE, encoding="utf-8")
+            path.write_bytes(SURFACE.encode("utf-8"))
             stdout = io.StringIO()
             with contextlib.redirect_stdout(stdout):
                 self.assertEqual(vc.main([str(path)]), 0)
@@ -140,7 +140,7 @@ class TicketValidationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             target = root / "real.txt"
-            target.write_text(SURFACE, encoding="utf-8")
+            target.write_bytes(SURFACE.encode("utf-8"))
             link = root / "driveprobe1.txt"
             try:
                 link.symlink_to(target)
@@ -160,8 +160,8 @@ class TicketValidationTests(unittest.TestCase):
             root = Path(tmp)
             path = root / "driveprobe1.txt"
             replacement = root / "replacement.tmp"
-            path.write_text(SURFACE, encoding="utf-8")
-            replacement.write_text(SURFACE.replace("GROK", "KITE"), encoding="utf-8")
+            path.write_bytes(SURFACE.encode("utf-8"))
+            replacement.write_bytes(SURFACE.replace("GROK", "KITE").encode("utf-8"))
             real_open = os.open
             swapped = False
 
