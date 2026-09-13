@@ -1,8 +1,10 @@
 import contextlib
 import io
+import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import validate_commands as vc
 
@@ -99,6 +101,89 @@ class TicketValidationTests(unittest.TestCase):
             with contextlib.redirect_stdout(stdout):
                 self.assertEqual(vc.main([str(path)]), 0)
             self.assertEqual(stdout.getvalue().strip(), "PASS: 1 command ticket(s)")
+
+    def test_descriptor_reader_accepts_exact_utf8_lf_ticket(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "driveprobe1.txt"
+            path.write_bytes(SURFACE.encode("utf-8"))
+            self.assertEqual(vc.read_ticket_file(path), SURFACE)
+
+    def test_rejects_bom_invalid_utf8_and_oversize(self):
+        cases = [
+            (b"\xef\xbb\xbf" + SURFACE.encode(), "BOM"),
+            (SURFACE.encode() + b"\xff", "strict UTF-8"),
+            (b"x" * (vc.MAX_TICKET_BYTES + 1), "exceeds"),
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "driveprobe1.txt"
+            for payload, message in cases:
+                with self.subTest(message=message):
+                    path.write_bytes(payload)
+                    with self.assertRaisesRegex(vc.TicketError, message):
+                        vc.read_ticket_file(path)
+
+    def test_rejects_parser_differential_separators_and_controls_anywhere(self):
+        cases = {
+            "CRLF": SURFACE.replace("\n", "\r\n", 1),
+            "NEL": SURFACE.replace("\n", "\u0085", 1),
+            "LINE_SEPARATOR": SURFACE.replace("\n", "\u2028", 1),
+            "PARAGRAPH_SEPARATOR": SURFACE.replace("\n", "\u2029", 1),
+            "NUL_HEADER": SURFACE.replace("GROK", "GROK\x00"),
+            "TAB_BODY": SAY.replace("hello there", "hello\tthere"),
+        }
+        for name, text in cases.items():
+            with self.subTest(name=name):
+                with self.assertRaisesRegex(vc.TicketError, "forbidden control/separator"):
+                    vc.parse_ticket(text)
+
+    def test_final_symlink_and_nonregular_paths_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = root / "real.txt"
+            target.write_text(SURFACE, encoding="utf-8")
+            link = root / "driveprobe1.txt"
+            try:
+                link.symlink_to(target)
+            except (OSError, NotImplementedError):
+                pass
+            else:
+                with self.assertRaisesRegex(vc.TicketError, "must not be a symlink"):
+                    vc.read_ticket_file(link)
+
+            directory = root / "directory.txt"
+            directory.mkdir()
+            with self.assertRaisesRegex(vc.TicketError, "regular file"):
+                vc.read_ticket_file(directory)
+
+    def test_path_replacement_between_lstat_and_open_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = root / "driveprobe1.txt"
+            replacement = root / "replacement.tmp"
+            path.write_text(SURFACE, encoding="utf-8")
+            replacement.write_text(SURFACE.replace("GROK", "KITE"), encoding="utf-8")
+            real_open = os.open
+            swapped = False
+
+            def replacing_open(open_path, flags, *args, **kwargs):
+                nonlocal swapped
+                if not swapped and Path(open_path) == path:
+                    os.replace(replacement, path)
+                    swapped = True
+                return real_open(open_path, flags, *args, **kwargs)
+
+            with mock.patch.object(vc.os, "open", side_effect=replacing_open):
+                with self.assertRaisesRegex(vc.TicketError, "changed before open"):
+                    vc.read_ticket_file(path)
+
+    def test_discovery_does_not_silently_skip_txt_directory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "fake.txt").mkdir()
+            paths = vc.discover_ticket_paths(root)
+            self.assertEqual(paths, [root / "fake.txt"])
+            with self.assertRaisesRegex(vc.TicketError, "regular file"):
+                vc.validate_paths(paths)
 
 
 if __name__ == "__main__":
