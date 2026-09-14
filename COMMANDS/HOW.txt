@@ -21,16 +21,37 @@ A reachable mouth /say is a GET mutation when a hostname works.
 Do not invent a road on trycloudflare or raw.githubusercontent.com.
 Do not send /say until Bryce confirms the outbound body.
 
+READ-ONLY PREFLIGHT:
+  python validate_commands.py
+The standalone validator is a convenience preflight, not an authority token and
+not a byte-generation lock for a later pull. Each COMMANDS/<id>.txt it checks is
+opened once as an ordinary regular file, bounded to 64 KiB, decoded as strict
+UTF-8 without BOM, and parsed with LF-only line boundaries. Symlinks,
+pathname-generation drift, non-regular inputs, CR/Unicode line separators and
+control bytes fail closed. A PASS can become stale if the board changes after
+the check; it does not authenticate claimed_from, grant ZERO_AUTHORITY, execute
+a ticket, contact the PC/network, or authorize later bytes.
+
 PC PULL (one button, then die — not a 10-minute watcher):
   python host/muhl_github_drive.py --go
-Reads COMMANDS/ from this repo and from [local]
+The puller does NOT trust a prior standalone PASS. Inside the same --go run,
+before its action loop, it independently freezes and revalidates its own input
+snapshot: GitHub COMMANDS is pinned to one exact main commit and each listed
+file is verified against its Git blob bytes; local COMMANDS freezes one name-set
+and each candidate is read from a stable ordinary-file descriptor generation.
+Bad/torn/oversize/malformed input, unsafe authority fields, or a local/GitHub id
+collision makes the whole snapshot HOLD before dispatch. A local ticket arriving
+after that run's frozen name-set is not consumed until a later run.
+
 kind=surface  -> surface dests FROM FILE, write receipt, no fire
 kind=say      -> deliver once with idempotent id (approved=YES, body required)
-Duplicate id = original receipt. Never smash commons.mno. Never --inject 0x01.
+Existing receipt id = already handled. Never smash commons.mno. Never --inject 0x01.
 KITE->GROK say also needs owner_ok=BRYCE.
 
 TICKETS:
   COMMANDS/TEMPLATE_SURFACE.txt
   COMMANDS/TEMPLATE_SAY.txt
   COMMANDS/<id>.txt
-Bryce or Grok writes the ticket. Then --go pulls. Receipts land on COMMANDS/RECEIPTS/.
+Bryce or Grok writes the ticket. Running validate_commands.py first is useful,
+but --go still freezes and validates the exact snapshot it will consume.
+Receipts land on COMMANDS/RECEIPTS/.

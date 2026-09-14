@@ -1,0 +1,5 @@
+# Authority-bearing command tickets have a repository-canonical byte grammar.
+/COMMANDS/*.txt text eol=lf
+/validate_commands.py text eol=lf
+/test_validate_commands.py text eol=lf
+/.github/workflows/validate-commands.yml text eol=lf
