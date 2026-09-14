@@ -1,0 +1,62 @@
+name: Verify command batch ledger
+
+on:
+  pull_request:
+    paths:
+      - "COMMANDS/**"
+      - "command_batch.py"
+      - "command_batch_*.py"
+      - "test_command_batch_*.py"
+      - "validate_commands.py"
+      - "COMMANDS/BATCH_LEDGER.md"
+      - ".github/workflows/command-batch.yml"
+  push:
+    branches: [main]
+    paths:
+      - "COMMANDS/**"
+      - "command_batch.py"
+      - "command_batch_*.py"
+      - "test_command_batch_*.py"
+      - "validate_commands.py"
+      - "COMMANDS/BATCH_LEDGER.md"
+      - ".github/workflows/command-batch.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  ledger:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile sources
+        run: python -B -m py_compile command_batch.py command_batch_*.py test_command_batch_*.py validate_commands.py
+      - name: Unit and hostile tests
+        run: python -B -m unittest discover -v -p "test_command_batch_*.py"
+      - name: Optimized-mode tests
+        run: python -O -B -m unittest discover -v -p "test_command_batch_*.py"
+      - name: Current-board compile and exact replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$(mktemp -d)"
+          python -B command_batch.py compile \
+            --commands-dir COMMANDS \
+            --receipts-dir COMMANDS/RECEIPTS \
+            --source-ref CI-CANDIDATE \
+            --packet-out "$out/command-batch.json" \
+            --summary-out "$out/command-batch.md"
+          python -B command_batch.py verify \
+            --commands-dir COMMANDS \
+            --receipts-dir COMMANDS/RECEIPTS \
+            --source-ref CI-CANDIDATE \
+            --packet "$out/command-batch.json" \
+            --summary "$out/command-batch.md"
