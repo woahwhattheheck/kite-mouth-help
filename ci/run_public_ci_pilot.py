@@ -21,11 +21,14 @@ TEST_COMMAND = (
     "unittest",
     "-v",
     "test_validate_commands.py",
+    "test_validate_commands_ancestors.py",
     "ci.test_circleci_contract",
 )
 HASHED_PATHS = (
     Path("validate_commands.py"),
+    Path("validate_commands_core.py"),
     Path("test_validate_commands.py"),
+    Path("test_validate_commands_ancestors.py"),
     Path(".circleci/config.yml"),
     Path("ci/run_public_ci_pilot.py"),
     Path("ci/test_circleci_contract.py"),
