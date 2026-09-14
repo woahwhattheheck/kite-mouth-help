@@ -8,17 +8,27 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-import command_batch as cb
+import command_batch as _public_cb
 from command_batch_compile import compile_batch as _compile_batch_unbound
 from command_batch_packet import verify_packet as _verify_packet_unbound
 
 # Preserve the actual public exact-Git entry points for the dedicated authority
-# boundary suite, then point the legacy parser/reconciliation harness at the
-# implementation-level path API it is intended to exercise.
-PUBLIC_COMPILE_BATCH = cb.compile_batch
-PUBLIC_VERIFY_PACKET = cb.verify_packet
-cb.compile_batch = _compile_batch_unbound
-cb.verify_packet = _verify_packet_unbound
+# boundary suite without mutating the shared production module singleton.
+PUBLIC_COMPILE_BATCH = _public_cb.compile_batch
+PUBLIC_VERIFY_PACKET = _public_cb.verify_packet
+
+
+class _LegacyCommandBatchFacade:
+    """Expose the legacy path-level test API without monkeypatching production."""
+
+    compile_batch = staticmethod(_compile_batch_unbound)
+    verify_packet = staticmethod(_verify_packet_unbound)
+
+    def __getattr__(self, name):
+        return getattr(_public_cb, name)
+
+
+cb = _LegacyCommandBatchFacade()
 
 
 def surface(ticket_id: str, *, claimed_from: str = "GROK", extra: str = "") -> str:
