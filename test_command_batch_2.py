@@ -83,7 +83,7 @@ class CommandBatchTests2(unittest.TestCase):
                 commands = root / "commands"
                 commands.mkdir()
                 ticket_path = commands / "same.txt"
-                ticket_path.write_text(surface("same"), encoding="utf-8")
+                write_utf8(ticket_path, surface("same"))
                 digest = hashlib.sha256(ticket_path.read_bytes()).hexdigest()
                 first_dir = root / "receipts-a"
                 second_dir = root / "receipts-b"
@@ -92,8 +92,8 @@ class CommandBatchTests2(unittest.TestCase):
                 first = first_dir / "same.txt"
                 second = second_dir / "same.txt"
                 payload = receipt("same", kind="surface", ticket_sha256=digest)
-                first.write_text(payload, encoding="utf-8")
-                second.write_text(payload, encoding="utf-8")
+                write_utf8(first, payload)
+                write_utf8(second, payload)
                 packet = cb.compile_batch(
                     [ticket_path],
                     [first, second],
@@ -152,8 +152,8 @@ class CommandBatchTests2(unittest.TestCase):
                 second_dir.mkdir()
                 first = first_dir / "same.txt"
                 second = second_dir / "same.txt"
-                first.write_text(surface("same"), encoding="utf-8")
-                second.write_text(surface("same"), encoding="utf-8")
+                write_utf8(first, surface("same"))
+                write_utf8(second, surface("same"))
                 packet = cb.compile_batch([first, second], [], source_ref="x", ticket_root=root)
                 self.assertEqual(packet["payload"]["state"], "HOLD")
                 self.assertTrue(
@@ -188,11 +188,11 @@ class CommandBatchTests2(unittest.TestCase):
                 harness = BatchHarness(Path(tmp))
                 harness.write_ticket("surface1", surface("surface1"))
                 path = harness.receipts / "surface1.txt"
-                path.write_text(
+                write_utf8(
+                    path,
                     receipt("surface1", kind="surface").replace(
                         "authenticated_player=UNKNOWN", "authenticated_player=GROK"
                     ),
-                    encoding="utf-8",
                 )
                 packet = harness.compile()
                 self.assertIn(

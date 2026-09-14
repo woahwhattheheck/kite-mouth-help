@@ -50,7 +50,7 @@ class CommandBatchTests3(unittest.TestCase):
             with tempfile.TemporaryDirectory() as tmp:
                 root = Path(tmp)
                 target = root / "real.txt"
-                target.write_text(surface("link"), encoding="utf-8")
+                write_utf8(target, surface("link"))
                 link = root / "link.txt"
                 try:
                     link.symlink_to(target)
@@ -102,7 +102,7 @@ class CommandBatchTests3(unittest.TestCase):
                         receipt_root=harness.receipts,
                     )
 
-                path.write_text(surface("surface1", extra="note=changed\n"), encoding="utf-8")
+                write_utf8(path, surface("surface1", extra="note=changed\n"))
                 with self.assertRaisesRegex(cb.BatchError, "PACKET_DRIFT"):
                     cb.verify_packet(
                         data,

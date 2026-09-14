@@ -41,7 +41,8 @@ class CommandBatchTests1(unittest.TestCase):
                 self.assertEqual(ticket["status"], "HOLD")
                 self.assertIn("MALFORMED_TICKET", {reason["code"] for reason in ticket["reasons"]})
 
-                (harness.commands / "reverse.txt").write_text(
+                write_utf8(
+                    harness.commands / "reverse.txt",
                     say(
                         "reverse",
                         sender="KITE",
@@ -49,7 +50,6 @@ class CommandBatchTests1(unittest.TestCase):
                         claimed_from="KITE",
                         owner_ok="BRYCE",
                     ),
-                    encoding="utf-8",
                 )
                 packet = harness.compile()
                 self.assertEqual(packet["payload"]["tickets"][0]["status"], "READY_FOR_HOST_REVIEW")

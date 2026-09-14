@@ -94,8 +94,8 @@ class CommandBatchTests4(unittest.TestCase):
                 root = Path(tmp)
                 path = root / "surface1.txt"
                 replacement = root / "replacement.tmp"
-                path.write_text(surface("surface1"), encoding="utf-8")
-                replacement.write_text(surface("surface1", claimed_from="KITE"), encoding="utf-8")
+                write_utf8(path, surface("surface1"))
+                write_utf8(replacement, surface("surface1", claimed_from="KITE"))
                 real_open = os.open
                 swapped = False
 
@@ -114,7 +114,7 @@ class CommandBatchTests4(unittest.TestCase):
             with tempfile.TemporaryDirectory() as tmp:
                 root = Path(tmp)
                 path = root / "wrong.txt"
-                path.write_text(receipt("right", kind="surface"), encoding="utf-8")
+                write_utf8(path, receipt("right", kind="surface"))
                 packet = cb.compile_batch([], [path], source_ref="x", receipt_root=root)
                 codes = {reason["code"] for reason in packet["payload"]["receipts"][0]["reasons"]}
                 self.assertIn("RECEIPT_FILENAME_ID_MISMATCH", codes)

@@ -75,6 +75,11 @@ def receipt(
     return "\n".join(lines) + "\n"
 
 
+def write_utf8(path: Path, text: str) -> None:
+    """Write exact UTF-8 bytes without platform newline translation."""
+    path.write_bytes(text.encode("utf-8"))
+
+
 class BatchHarness:
     def __init__(self, root: Path):
         self.root = root
