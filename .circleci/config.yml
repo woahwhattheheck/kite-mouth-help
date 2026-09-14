@@ -8,7 +8,7 @@ parameters:
 jobs:
   public-test-shard:
     docker:
-      - image: cimg/python:3.12.8
+      - image: cimg/python:3.12.14
     resource_class: small
     parallelism: 1
     steps:

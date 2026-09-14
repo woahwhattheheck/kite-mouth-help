@@ -32,7 +32,7 @@ class CircleCIPilotContractTests(unittest.TestCase):
         self.assertEqual(self.config.count("parallelism:"), 1)
         self.assertIn("parallelism: 1", self.config)
         self.assertEqual(self.config.count("- image:"), 1)
-        self.assertIn("image: cimg/python:3.12.8", self.config)
+        self.assertIn("image: cimg/python:3.12.14", self.config)
 
     def test_config_has_one_bounded_test_step(self):
         self.assertEqual(self.config.count("command:"), 1)
