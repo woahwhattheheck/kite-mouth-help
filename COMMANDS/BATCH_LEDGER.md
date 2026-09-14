@@ -166,7 +166,9 @@ Each ticket and receipt is:
   embedded BOM.
 
 Receipts require one exact `RECEIPT` header, unique keys, a filename matching
-`id`, and `id`, `kind`, and `operation` fields. The historical exact statement
+`id`, and non-empty `id`, `kind`, `operation`, `claimed_from`, and
+`authenticated_player` fields. `authenticated_player` must remain exactly
+`UNKNOWN`. The historical exact statement
 `HTTP is not the computer` is accepted; arbitrary free-form receipt lines are
 not.
 
