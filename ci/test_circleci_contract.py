@@ -82,14 +82,23 @@ class CircleCIPilotContractTests(unittest.TestCase):
         command_tail = tuple(ast.literal_eval(element) for element in command.elts[1:])
         self.assertEqual(
             command_tail,
-            ("-m", "unittest", "-v", "test_validate_commands.py", "ci.test_circleci_contract"),
+            (
+                "-m",
+                "unittest",
+                "-v",
+                "test_validate_commands.py",
+                "test_validate_commands_ancestors.py",
+                "ci.test_circleci_contract",
+            ),
         )
         self.assertNotIn("shell=True", self.runner)
 
     def test_runner_emits_hash_bound_receipt(self):
         for path in (
             "validate_commands.py",
+            "validate_commands_core.py",
             "test_validate_commands.py",
+            "test_validate_commands_ancestors.py",
             ".circleci/config.yml",
             "ci/run_public_ci_pilot.py",
             "ci/test_circleci_contract.py",

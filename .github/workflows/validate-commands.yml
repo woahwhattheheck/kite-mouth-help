@@ -6,7 +6,9 @@ on:
       - ".gitattributes"
       - "COMMANDS/**"
       - "validate_commands.py"
+      - "validate_commands_core.py"
       - "test_validate_commands.py"
+      - "test_validate_commands_ancestors.py"
       - ".github/workflows/validate-commands.yml"
   push:
     branches: [main]
@@ -14,7 +16,9 @@ on:
       - ".gitattributes"
       - "COMMANDS/**"
       - "validate_commands.py"
+      - "validate_commands_core.py"
       - "test_validate_commands.py"
+      - "test_validate_commands_ancestors.py"
       - ".github/workflows/validate-commands.yml"
 
 permissions:
@@ -33,9 +37,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Compile validator modules
+        run: python -B -m py_compile validate_commands.py validate_commands_core.py test_validate_commands.py test_validate_commands_ancestors.py
       - name: Unit and hostile tests
-        run: python -B -m unittest -v test_validate_commands.py
+        run: python -B -m unittest -v test_validate_commands.py test_validate_commands_ancestors.py
       - name: Optimized-mode tests
-        run: python -O -B -m unittest -v test_validate_commands.py
+        run: python -O -B -m unittest -v test_validate_commands.py test_validate_commands_ancestors.py
       - name: Validate current command directory
         run: python -B validate_commands.py
