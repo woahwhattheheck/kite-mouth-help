@@ -174,7 +174,11 @@ def _normalize_repository(repository: Path) -> Path:
 def _normalize_tree_prefix(repository: Path, value: Path, *, label: str) -> str:
     candidate = Path(value)
     if candidate.is_absolute():
-        absolute = candidate.absolute()
+        # On Windows, tempfile paths can arrive through an 8.3 alias while
+        # repository.resolve() returns the long spelling. Canonicalize without
+        # requiring the mutable leaf to exist; Git, not the worktree, remains
+        # the source of bytes and names.
+        absolute = candidate.resolve(strict=False)
         try:
             relative = absolute.relative_to(repository)
         except ValueError as exc:
