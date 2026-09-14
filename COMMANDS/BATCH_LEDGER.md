@@ -175,7 +175,7 @@ not.
 ## Tests
 
 ```bash
-python -B -m py_compile command_batch.py command_batch_*.py test_command_batch_*.py
+python -B -m py_compile command_batch.py command_batch_cli.py command_batch_compile.py command_batch_model.py command_batch_packet.py command_batch_sources.py test_command_batch_support.py test_command_batch_1.py test_command_batch_2.py test_command_batch_3.py test_command_batch_4.py
 python -B -m unittest discover -v -p "test_command_batch_*.py"
 python -O -B -m unittest discover -v -p "test_command_batch_*.py"
 ```
