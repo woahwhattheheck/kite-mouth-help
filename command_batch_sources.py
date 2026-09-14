@@ -109,7 +109,8 @@ def parse_receipt_bytes(data: bytes, *, path: Path, label: str) -> Receipt:
             raise BatchError(f"RECEIPT_DUPLICATE_KEY: {label}:{lineno}: duplicate key {key!r}")
         fields[key] = value
 
-    missing = [key for key in ("id", "kind", "operation") if not fields.get(key)]
+    required = ("id", "kind", "operation", "claimed_from", "authenticated_player")
+    missing = [key for key in required if not fields.get(key)]
     if missing:
         raise BatchError(f"RECEIPT_MISSING_FIELD: {label}: {', '.join(missing)}")
     receipt_id = fields["id"]
