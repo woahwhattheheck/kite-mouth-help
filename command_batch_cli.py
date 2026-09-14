@@ -25,7 +25,7 @@ def _build_parser() -> argparse.ArgumentParser:
     def common(subparser: argparse.ArgumentParser) -> None:
         subparser.add_argument("--commands-dir", type=Path, default=Path("COMMANDS"))
         subparser.add_argument("--receipts-dir", type=Path, default=Path("COMMANDS/RECEIPTS"))
-        subparser.add_argument("--source-ref", default="UNPINNED")
+        subparser.add_argument("--source-ref", required=True)
 
     compile_parser = subparsers.add_parser("compile", help="compile a new packet and summary")
     common(compile_parser)
