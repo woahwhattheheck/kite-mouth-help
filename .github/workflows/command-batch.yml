@@ -34,29 +34,35 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Compile sources
-        run: python -B -m py_compile command_batch.py command_batch_cli.py command_batch_compile.py command_batch_model.py command_batch_packet.py command_batch_sources.py test_command_batch_support.py test_command_batch_1.py test_command_batch_2.py test_command_batch_3.py test_command_batch_4.py validate_commands.py
+        run: python -B -m py_compile command_batch.py command_batch_cli.py command_batch_compile.py command_batch_git.py command_batch_model.py command_batch_packet.py command_batch_sources.py test_command_batch_support.py test_command_batch_1.py test_command_batch_2.py test_command_batch_3.py test_command_batch_4.py test_command_batch_5.py validate_commands.py
       - name: Unit and hostile tests
         run: python -B -m unittest discover -v -p "test_command_batch_*.py"
       - name: Optimized-mode tests
         run: python -O -B -m unittest discover -v -p "test_command_batch_*.py"
-      - name: Current-board compile and exact replay
+      - name: Current-board exact-commit compile and replay
         shell: bash
         run: |
           set -euo pipefail
           out="$(mktemp -d)"
+          source_ref="$(git rev-parse HEAD)"
           python -B command_batch.py compile \
+            --git-repo . \
             --commands-dir COMMANDS \
             --receipts-dir COMMANDS/RECEIPTS \
-            --source-ref CI-CANDIDATE \
+            --source-ref "$source_ref" \
             --packet-out "$out/command-batch.json" \
             --summary-out "$out/command-batch.md"
           python -B command_batch.py verify \
+            --git-repo . \
             --commands-dir COMMANDS \
             --receipts-dir COMMANDS/RECEIPTS \
-            --source-ref CI-CANDIDATE \
+            --source-ref "$source_ref" \
             --packet "$out/command-batch.json" \
             --summary "$out/command-batch.md"

@@ -12,6 +12,7 @@ from command_batch_sources import (
     parse_receipt_bytes, read_bounded_regular, write_new_file,
 )
 from command_batch_compile import compile_batch
+from command_batch_git import FrozenGitSnapshot, frozen_git_snapshot
 from command_batch_packet import packet_bytes, parse_packet_bytes, render_summary, verify_packet
 from command_batch_cli import main
 

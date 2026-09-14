@@ -174,7 +174,12 @@ def _preflight_new_output(path: Path) -> None:
 
 
 def write_new_file(path: Path, data: bytes) -> None:
-    """Create one new ordinary output with O_EXCL and no final symlink following."""
+    """Create a new output and never unlink by pathname after a write failure.
+
+    A failed write can leave an owned partial file for forensic/manual cleanup.
+    Safe leakage is preferable to a check/use cleanup race that could delete a
+    foreign same-name replacement.
+    """
     path = Path(path)
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0)
     flags |= getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
@@ -182,7 +187,6 @@ def write_new_file(path: Path, data: bytes) -> None:
         fd = os.open(path, flags, 0o600)
     except OSError as exc:
         raise BatchError(f"OUTPUT_CREATE_ERROR: {path}: {_errno_name(exc)}") from exc
-    created_identity = _stable_identity(os.fstat(fd))
     try:
         view = memoryview(data)
         while view:
@@ -195,11 +199,8 @@ def write_new_file(path: Path, data: bytes) -> None:
         if not stat.S_ISREG(info.st_mode) or info.st_size != len(data):
             raise BatchError(f"OUTPUT_VERIFY_ERROR: {path}: output size/type mismatch")
     except BaseException:
-        os.close(fd)
         try:
-            current = path.lstat()
-            if _stable_identity(current) == created_identity:
-                path.unlink()
+            os.close(fd)
         except OSError:
             pass
         raise
