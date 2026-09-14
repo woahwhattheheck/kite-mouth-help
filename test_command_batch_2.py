@@ -162,3 +162,40 @@ class CommandBatchTests2(unittest.TestCase):
                         for item in packet["payload"]["tickets"]
                     )
                 )
+    def test_receipt_requires_observed_provenance_fields(self):
+            with tempfile.TemporaryDirectory() as tmp:
+                harness = BatchHarness(Path(tmp))
+                ticket_path = harness.write_ticket("surface1", surface("surface1"))
+                digest = hashlib.sha256(ticket_path.read_bytes()).hexdigest()
+                harness.write_receipt(
+                    "surface1",
+                    "RECEIPT\n"
+                    "operation=surface\n"
+                    "id=surface1\n"
+                    "kind=surface\n"
+                    f"ticket_sha256={digest}\n"
+                    "HTTP is not the computer\n",
+                )
+                packet = harness.compile()
+                self.assertEqual(packet["payload"]["state"], "HOLD")
+                self.assertIn(
+                    "RECEIPT_MISSING_FIELD",
+                    {reason["code"] for reason in packet["payload"]["receipts"][0]["reasons"]},
+                )
+
+    def test_receipt_cannot_claim_an_authenticated_player(self):
+            with tempfile.TemporaryDirectory() as tmp:
+                harness = BatchHarness(Path(tmp))
+                harness.write_ticket("surface1", surface("surface1"))
+                path = harness.receipts / "surface1.txt"
+                path.write_text(
+                    receipt("surface1", kind="surface").replace(
+                        "authenticated_player=UNKNOWN", "authenticated_player=GROK"
+                    ),
+                    encoding="utf-8",
+                )
+                packet = harness.compile()
+                self.assertIn(
+                    "RECEIPT_AUTHENTICATION_CLAIM",
+                    {reason["code"] for reason in packet["payload"]["receipts"][0]["reasons"]},
+                )
