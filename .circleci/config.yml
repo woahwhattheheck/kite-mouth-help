@@ -1,0 +1,25 @@
+version: 2.1
+
+parameters:
+  run_public_ci_pilot:
+    type: boolean
+    default: false
+
+jobs:
+  public-test-shard:
+    docker:
+      - image: cimg/python:3.12.8
+    resource_class: small
+    parallelism: 1
+    steps:
+      - checkout
+      - run:
+          name: Run bounded public test shard
+          command: python ci/run_public_ci_pilot.py
+          no_output_timeout: 6m
+
+workflows:
+  public-ci-pilot:
+    when: << pipeline.parameters.run_public_ci_pilot >>
+    jobs:
+      - public-test-shard
