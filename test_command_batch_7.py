@@ -6,6 +6,7 @@ from pathlib import Path
 
 import command_batch as cb
 import command_batch_git as git_loader
+from test_command_batch_support import PUBLIC_COMPILE_BATCH
 
 
 def _git(repository: Path | None, *args: str, env: dict[str, str] | None = None, check: bool = True):
@@ -61,7 +62,7 @@ class CommandBatchNoLazyFetchTests(unittest.TestCase):
             self.assertNotEqual(before.returncode, 0, "fixture unexpectedly materialized selected blob")
 
             with self.assertRaisesRegex(cb.BatchError, "GIT_COMMAND_FAILED"):
-                cb.compile_batch(
+                PUBLIC_COMPILE_BATCH(
                     git_repo=clone,
                     source_ref=commit_sha,
                     commands_dir=Path("COMMANDS"),
