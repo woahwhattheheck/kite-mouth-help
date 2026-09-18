@@ -261,6 +261,12 @@ def _selected_entries(
             )
         if not GIT_SHA1_RE.fullmatch(object_id):
             raise BatchError(f"GIT_OBJECT_ID: invalid SHA-1 for {tree_prefix}/{name}")
+        if raw_size == b"BAD":
+            # ls-tree -l prints BAD for an object it cannot read (for example a
+            # promised blob that GIT_NO_LAZY_FETCH prevents materializing).
+            raise BatchError(
+                f"GIT_COMMAND_FAILED: ls-tree -l: object unavailable for {tree_prefix}/{name}"
+            )
         try:
             byte_count = int(raw_size)
         except ValueError as exc:
