@@ -33,13 +33,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+      - name: Checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init -q .
+          git remote add origin "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+          git fetch -q --depth 1 origin "${{ github.event.pull_request.head.sha || github.sha }}"
+          git checkout -q FETCH_HEAD
+      - name: Python toolchain
+        run: python --version
       - name: Compile sources
         run: python -B -m py_compile command_batch.py command_batch_cli.py command_batch_compile.py command_batch_git.py command_batch_git_impl.py command_batch_model.py command_batch_packet.py command_batch_sources.py test_command_batch_support.py test_command_batch_1.py test_command_batch_2.py test_command_batch_3.py test_command_batch_4.py test_command_batch_5.py test_command_batch_6.py test_command_batch_7.py validate_commands.py
       - name: Unit and hostile tests
