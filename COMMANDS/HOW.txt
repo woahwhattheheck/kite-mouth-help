@@ -1,0 +1,31 @@
+COMMAND TICKET INPUT FORMAT
+
+Tickets are immediate .txt files in the configured command directory.
+Each ticket has one unique id and line-oriented key=value fields.
+The filename must match the ticket id. UTF-8 and LF line endings are required.
+
+The existing protocol accepts surface and say tickets.
+Both require approved=YES, a non-empty claimed_from value, and
+authenticated_player=UNKNOWN.
+Say tickets additionally require from, to, and a body following a line
+containing exactly ---. The existing reverse-route contract requires
+owner_ok=BRYCE when from=KITE and to=GROK. These protocol strings are
+validation fields; the tools do not authenticate their values.
+
+LOCAL PREFLIGHT
+
+From the repository root:
+  python -B validate_commands.py
+
+The preflight validates syntax and stable-file boundaries only. It does not
+execute commands, grant authority, authenticate identities, or contact a
+device or network service.
+
+EXACT-COMMIT BATCH REVIEW
+
+See BATCH_LEDGER.md for compile and verify commands. Review uses one exact
+local Git commit and binds the selected path set and file bytes to that
+commit. A packet generated from one commit does not authorize later bytes.
+
+Use private working copies for actual tickets and receipts. The public
+repository contains only generic templates and technical documentation.

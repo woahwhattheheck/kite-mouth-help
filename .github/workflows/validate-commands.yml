@@ -1,0 +1,53 @@
+name: Validate command tickets
+
+on:
+  pull_request:
+    paths:
+      - ".gitattributes"
+      - "COMMANDS/**"
+      - "validate_commands.py"
+      - "validate_commands_core.py"
+      - "test_validate_commands.py"
+      - "test_validate_commands_ancestors.py"
+      - ".github/workflows/validate-commands.yml"
+  push:
+    branches: [main]
+    paths:
+      - ".gitattributes"
+      - "COMMANDS/**"
+      - "validate_commands.py"
+      - "validate_commands_core.py"
+      - "test_validate_commands.py"
+      - "test_validate_commands_ancestors.py"
+      - ".github/workflows/validate-commands.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init -q .
+          git remote add origin "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+          git fetch -q --depth 1 origin "${{ github.event.pull_request.head.sha || github.sha }}"
+          git checkout -q FETCH_HEAD
+      - name: Python toolchain
+        run: python --version
+      - name: Compile validator modules
+        run: python -B -m py_compile validate_commands.py validate_commands_core.py test_validate_commands.py test_validate_commands_ancestors.py
+      - name: Unit and hostile tests
+        run: python -B -m unittest -v test_validate_commands.py test_validate_commands_ancestors.py
+      - name: Optimized-mode tests
+        run: python -O -B -m unittest -v test_validate_commands.py test_validate_commands_ancestors.py
+      - name: Validate current command directory
+        run: python -B validate_commands.py

@@ -1,0 +1,12 @@
+# Template: copy to a private command directory as <id>.txt.
+# Validation does not send the body or grant permission to execute the ticket.
+id=sayXXXXXXXX
+kind=say
+approved=YES
+from=GROK
+to=KITE
+claimed_from=GROK
+authenticated_player=UNKNOWN
+owner_ok=
+---
+EXAMPLE MESSAGE BODY

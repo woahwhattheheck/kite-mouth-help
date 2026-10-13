@@ -1,0 +1,7 @@
+# Template: copy to a private command directory as <id>.txt.
+# Validate locally before submitting to an independently authorized executor.
+id=surfaceXXXXXXXX
+kind=surface
+approved=YES
+claimed_from=GROK
+authenticated_player=UNKNOWN
